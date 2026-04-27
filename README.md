@@ -45,21 +45,21 @@ Make sure `adjmouse=true` is set in `ddraw.ini` (it's the default).
 
 ## Running on Linux (Wine)
 
+1. Install Wine (32-bit):
+   ```bash
+   sudo dnf install wine.i686    # Fedora
+   sudo apt install wine32        # Debian/Ubuntu
+   ```
+2. Copy `play.sh` and `play-nocd.sh` into the game folder (next to `PIZZA.EXE`)
+3. Run the appropriate launcher:
+   - **`./play.sh`** — if you have the original CD mounted
+   - **`./play-nocd.sh`** — if you copied the game files to disk (requires a no-CD patched `PIZZA.EXE`)
+
+The scripts handle cnc-ddraw download, Wine registry setup, and drive mapping automatically — same as the Windows `.bat` launchers.
+
+To use a custom Wine prefix, set `WINEPREFIX` before launching:
 ```bash
-# Install Wine
-sudo dnf install wine.i686    # Fedora
-sudo apt install wine32        # Debian/Ubuntu
-
-# Set up drive mapping and registry
-export WINEPREFIX=~/.wine
-mkdir -p "$WINEPREFIX/dosdevices"
-ln -sfn /path/to/game "$WINEPREFIX/dosdevices/p:"
-wine reg add "HKLM\SOFTWARE\SOFTWARE2000\Pizza Syndicate\Data" \
-    /v Path /t REG_SZ /d "P:\\" /f /reg:32
-
-# Launch (cnc-ddraw must be in the game folder)
-cd /path/to/game
-WINEDLLOVERRIDES="ddraw=n,b" wine PIZZA.EXE
+WINEPREFIX=~/wine32 ./play-nocd.sh
 ```
 
 ## Credits
